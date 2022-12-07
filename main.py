@@ -15,7 +15,7 @@ class Task(BaseModel):
     category: str
     activity: str
     status: bool
-    date_created: datetime.datetime.utcnow
+
 
     class Config:
         orm_mode = True
@@ -24,9 +24,11 @@ class Task(BaseModel):
 db = LocalSession()
 
 
+#Homepage for app. Lists all the user-created tasks and a delete action.
+
 @app.get('/tasks', response_model = List[Task], status_code = 200)
 def index():
-    #"""Homepage for app. Lists all the user-created tasks and a delete action."""
+
     tasks = db.query(models.Task).all()
 
     return tasks
@@ -63,7 +65,7 @@ def create_task(task:Task):
 
 #Updates a task in the database.
 @app.put("/tasks/{task_id}", response_model=Task, status_code = status.HTTP_200_OK)
-def update_task(task_id:int,item:Item):
+def update_task(task_id:int,task:Task):
     task_to_update=db.query(models.Task).filter(models.Task.id==task_id).first()
     task_to_update.activity=task.activity
     task_to_update.description=task.description

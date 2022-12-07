@@ -9,5 +9,5 @@ engine = create_engine("postgresql://kairu:112233@localhost/kairu",
 
 Base = declarative_base()
 
-SessionLocal = sessionmaker(bind=engine)
+LocalSession = sessionmaker(bind=engine)
 
